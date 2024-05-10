@@ -1,0 +1,143 @@
+1)Введите в терминале команду: py -m venv env.
+2)Активируйте виртуальное окружение: env\Scripts\activate.
+3) django-admin startproject насзваие проекта 
+4) в setting меняем :
+LANGUAGE_CODE = 'ru-ru'
+TIME_ZONE = 'Europe/Moscow'
+добавляем ипорт import os
+
+5)перейти в созданный проект cd drive
+6)python manage.py migrate
+7) python manage.py runserver
+8) создаем приложенеи python manage.py startapp blog
+9) необходимо зарегестрированить созданное приложение  settings - раздел INSTALLED_APPS:
+название берем из файла apps.py -> BlogConfig, в настройках дописываем 'названиеприложения.apps.BlogConfig'
+
+10) python manage.py migrate  
+
+11) python manage.py createsuperuser
+tedleiba
+donnidjon777
+
+12) Заходим в модел 
+
+class Post(models.Model):
+    '''данные о записи'''
+    title = models.CharField('Заголовок записи', max_length=100)
+    description= models.TextField('текст записи')
+    author=models.CharField('имя автора' , max_length=100)
+    date= models.DateField('Дата публикации')
+
+    def __str__(self):
+        return f'{self.title}, {self.author}'
+
+    class Meta:
+        verbose_name= 'Запись'
+        verbose_name_plural='Записи'
+		
+13) заходим в admin 
+from django.contrib import admin
+from.models import Post
+
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author')
+	
+	
+14)  python manage.py makemigrations потом  python manage.py migrate 
+	 
+15) в приложении открываем views.py	 (вывод записей)
+from django.shortcuts import render
+from django.views.generic.base import View
+from .models import Post
+
+# Представления
+
+class PostView(View):
+    '''вывод записей'''
+
+    def get (self, request):
+        posts= Post.objects.all()  # вываод всех записей 
+        return render(request, 'blog/index.html', {'post_list': posts})
+
+
+16)создаем папку templates  
+закидываем шаблон  index.html
+ в шаблоне  вытаскиваем заиси что создали в админке джанго 
+ {% for post in post_list %}
+ {{ post.title }}
+ {{ post.description }}
+ {% endfor%} 
+
+17)		заходим в settings для регистрации шаблона html
+from pathlib import Path
+import os
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')] подключаем папку 
+		
+18) В приложении blog создаю файл urls.py 	
+там прописываем 
+from django.urls import path
+from. import views
+
+urlpatterns =[path('', views.PostView.as_view())]	
+
+19) Заходим в Основной urls там где setting
+
+должно быть так 
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('blog.urls'))
+]
+
+20) подключени картинок и css 
+
+создаем папку static не в приложении а директорией выше и переносим все файлы для стилей 
+
+заходим в settings  и дописываем 
+STATIC_URL = 'static/'
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [STATIC_DIR]
+
+21) Заходим в html 
+в самом верху пишем 
+{% load static %}
+
+    <link href="{% static 'css/styles.css'%}" rel="stylesheet" /> подключаем стиль 
+	внизу js паодключиить так же 
+	<script src="{% static 'js/scripts.js'%}"></script>
+	
+22) Работа с IMG 
+заходим в файл model и дописываем 
+  img = models.ImageField('Изобрадения', upload_to='img/%Y')
+  
+23) создаем папку media 
+24) Заходим в settings
+в самом низу пишем
+  MEDIA_ROOT =os.path.join(BASE_DIR, 'media')
+  MEDIA_URL = '/media/'
+
+25) файл urls главный не приложения 
+дописываем 
+from django.conf import settings
+from django.conf.urls.static import static
+
+в самом низу пишем 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
+	
+26) установить пакет для работу с изодражениями 
+pip install pillow	
+python manage.py makemigrations
+python manage.py migrate
+
+
+27) для того что бы работал изображения в html 
+<img class="img-fluid" src="{{ post.img.url }}" alt="..." />

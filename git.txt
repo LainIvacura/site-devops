@@ -1,0 +1,67 @@
+------------GIT------------ 
+
+Путешествие  ТУДА и ОБРАТНО . 
+
+--------Установка----------
+Заходим на сайт https://git-scm.com
+Выбираем раздел downloads  и попадаем на страничу https://git-scm.com/downloads 
+Устанавливаем файл (next next next)
+Просверяем установился ли git -> задодим в CMD -> пишем git --version
+
+------Работа с git----------
+
+1) в папке выбираем bash cmd
+2) git init -- инициализация репозитория 
+3) Создаем репозиторий на githab точно такое же название что и на ПК 
+	git@github.com:DonniDarko777/LESSON.git
+4) регестрируем GIT на ПК 
+	git config --global user.name "LainIvacura"
+	git config --global user.email marmotdays@gmail.com
+5) Проверям установились ди параметры в GIT 
+	git config --list 
+6) Добавляем файлы в git
+	git add .
+7)	Коммитим 
+	git commit -m "first commit"
+	
+8)	вводим ссылку из гитхаба
+	git remote add origin git@github.com:DonniDarko777/LESSON.git
+9) переносим в гит 
+	git push -u origin main
+10 ) Если ошибка то нужно переименовать master в main ветку или отправить в существующую
+	git branch -M main	(переименовать)
+	git push -u origin master:main(существующая)
+	
+	ОШИБКИ error: src refspec master does not match any
+	1) заходим в настройки 
+	2) developer setting 
+	3) создание токтна
+	4) Note -> push token
+	4.1) устанавливаются галочки 
+	admin:org, admin:public_key, repo
+	5) генерим 
+	В консоли пишем
+	git remote -v 	
+	(на гит хабе берем ссылку репозитория именно https , (пример: git remote set-url origin https://токен@github.com/LainIvacura/loli.git)
+	git branch -M main создаем обязательно 
+	git push -u origin main
+	
+11) Создание новой ветки 
+git branch test
+git checkout test (переход на новую ветку)
+делаем что то в файлах (изменения )
+git add .
+git commit -m "проверка языка на коммиты"
+git push --set-upstream origin test (добавление ветки в репозитории на github)
+
+12) Проверить в какой ветки ты находишься 
+git status 
+
+13) Скачать репозиотрий 
+	git clone + ссылка на скачку 
+14) Для генерации SSH ключа  , распологается с/пользователь/.ssh
+	ssh-keygen -t ed25519 копируеи публитчный ключ на гит хаб 
+	
+	
+ 
+ 
