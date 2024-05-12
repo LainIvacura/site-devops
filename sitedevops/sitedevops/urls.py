@@ -26,7 +26,7 @@ from blogkubernetes.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('devops/', include('blogdevops.urls')), #  вставлять внтри приложения другие страницы (функции)
+    path('', include('blogdevops.urls')), #  вставлять внтри приложения другие страницы (функции)
     path('ansible/', include ('blogansible.urls')),
     path('docker/', include ('blogdocker.urls')),
     path('git/', include ('bloggit.urls')), 
