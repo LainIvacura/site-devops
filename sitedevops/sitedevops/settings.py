@@ -38,7 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blogdevops.apps.BlogdevopsConfig'
+    'blogdevops.apps.BlogdevopsConfig',
+    'blogansible.apps.BlogansibleConfig',
+    'blogdocker.apps.BlogdockerConfig',
+    'bloggit.apps.BloggitConfig',
+    'blogkubernetes.apps.BlogkubernetesConfig',
     
 ]
 

@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from blogdevops.views import index
+from blogansible.views import ansible
+from blogdocker.views import docker
+from bloggit.views import git
+from blogkubernetes.views import kubernetes
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('blogdevops/', index),
+    path('blogansible/', ansible),
+    path('blogdocker/', docker),
+    path('bloggit/', git), 
+    path('blogkubernetes/', kubernetes),
 ]
